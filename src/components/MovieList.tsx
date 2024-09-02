@@ -8,13 +8,13 @@ const MovieList = () => {
           hx-get='/api/movie'
           hx-target='#movielist'
         >
-          Filme laden
+          Aktualisieren
         </button>
       </div>
       <div id='movielist' className='mt-4'>
         <p className='mt-12 text-center'>
-          Drücke auf <span className='underline'>Filme laden</span> Button oben
-          rechts um alle Filme anzuzeigen.
+          Drücke auf <span className='underline'>Aktualisieren</span> Button
+          oben rechts um alle Filme anzuzeigen.
         </p>
       </div>
     </div>
