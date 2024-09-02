@@ -1,40 +1,46 @@
 export const parseFormBody = (body: string) => {
-    return body.split('&').reduce((acc: { [key: string]: any }, pair: string) => {
-        const [key, value] = pair.split('=');
-        acc[decodeURIComponent(key)] = decodeURIComponent(value).replace(/\+/g, ' ');
-        return acc;
-    }, {});
-}
+  return body.split("&").reduce((acc: { [key: string]: any }, pair: string) => {
+    const [key, value] = pair.split("=");
+    acc[decodeURIComponent(key)] = decodeURIComponent(value).replace(
+      /\+/g,
+      " ",
+    );
+    return acc;
+  }, {});
+};
 
 export interface Movie {
-    _id: string;
-    title: string;
-    year: number;
-    rating: number;
+  _id: string;
+  title: string;
+  year: number;
+  rating: number;
 }
 
-
 export const generateMoviesHTMLResponse = (movies: Movie[]): Response => {
-    const htmlContent = movies
-        .map(movie => `
-        <div class="border-2 border-slate-700 p-2 mb-2 rounded-lg">
+  const htmlContent = movies
+    .map(
+      (movie) => `
+        <div class="border-2 border-slate-400 p-2 mb-2 rounded-lg">
           <h2 class="text-xl">${movie.title}</h2>
           <p>Erscheinungsjahr: ${movie.year}</p>
           <p>Rating: ${movie.rating}</p>
             <button class="border-2 border-slate-700 px-3 rounded-md" hx-get="/api/movie/${movie._id}" hx-target="#editmovie">Bearbeiten</button>
           <button class="border-2 border-slate-700 px-3 rounded-md" hx-delete="/api/movie/${movie._id}" hx-target="#movielist">Löschen</button>
         </div>
-      `).join('');
+      `,
+    )
+    .join("");
 
-    return new Response(htmlContent, {
-        headers: {
-            "Content-Type": "text/html",
-        },
-    });
-}
+  return new Response(htmlContent, {
+    headers: {
+      "Content-Type": "text/html",
+    },
+  });
+};
 
 export const generateMovieHTMLResponse = (movie: Movie): Response => {
-    return new Response(`
+  return new Response(
+    `
     <div class="border-2 border-slate-800 rounded-md p-4">
     <p class="text-2xl text-center">Film bearbeiten</p>
     <form id="sdf" class="mt-4" hx-put="/api/movie/${movie._id}" hx-swap="outerHTML" hx-target="#movielist">
@@ -56,10 +62,10 @@ export const generateMovieHTMLResponse = (movie: Movie): Response => {
     </form>
   </div>
     `,
-        {
-            headers: {
-                "Content-Type": "text/html",
-            },
-        }
-    );
-}
+    {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    },
+  );
+};
